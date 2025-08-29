@@ -1,0 +1,28 @@
+{
+  "name": "fwk24s-plu-5irad-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/server.js",
+    "dev": "node --watch ./src/server.js",
+    "main": "./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hampusvh/FWK24S-PLU-5iRad-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hampusvh/FWK24S-PLU-5iRad-backend/issues"
+  },
+  "homepage": "https://github.com/hampusvh/FWK24S-PLU-5iRad-backend#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0"
+  }
+}
