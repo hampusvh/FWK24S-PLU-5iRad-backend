@@ -1,4 +1,4 @@
-import { addPlayer, createGame, fillTile } from "../models/gomoku_model";
+import { addPlayer, createGame, fillTile } from "../models/gomoku_model.js";
 
 export const add_token = (req, res) => {
     try {
