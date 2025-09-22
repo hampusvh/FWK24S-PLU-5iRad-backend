@@ -52,6 +52,7 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
     let columnScore = 1;
     let diagonalScore = 1;
 
+    // possible bug: does it increment even after it finds the opponents token? if that's the case, maybe break out of the loop when we find the opponents token, or something...?
     for(let i = 1; i < 5; i++) {
         // check horizontally
         if(board.tiles[startRow][startColumn+i] && board.tiles[startRow][startColumn+i] == tileToken) {
@@ -97,4 +98,10 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
     }
 
     console.log("No winner yet!");
+}
+
+const gomoku_get_tiles = () => {
+    const board = boards.find(b => b.gameId === gameId);
+
+    return board.tiles;
 }

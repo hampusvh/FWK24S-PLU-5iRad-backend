@@ -3,11 +3,11 @@ import { gomoku_add_player, gomoku_create_game, gomoku_fill_tile } from "../mode
 // todo: require Authorization header 
 export const add_token = (req, res) => {
     try {
-        const { gameId, row, column } = req.body;
+        const { gameId, row, column, token } = req.body;
         const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
         //mer logik här sen
-        const tiles = gomoku_fill_tile(gameId, row, column, 1);
+        const tiles = gomoku_fill_tile(gameId, row, column, token);
 
         res.status(200).json({
             status: "OK",
@@ -54,6 +54,23 @@ export const add_player = (req, res) => {
         });
     } catch (error) {
         console.error("Could not add_player in Gomoku:", error);
+        res.status(503).json({
+            status: "ERROR",
+            message: "Service unavailable",
+        });
+    }
+}
+
+export const get_tiles = (req, res) => {
+    try {
+        const tiles = gomoku_get_tiles();
+
+        res.status(200).json({
+            status: "OK",
+            tiles: tiles
+        });
+    } catch (error) {
+        console.error("Could not get_tiles in Gomoku:", error);
         res.status(503).json({
             status: "ERROR",
             message: "Service unavailable",
