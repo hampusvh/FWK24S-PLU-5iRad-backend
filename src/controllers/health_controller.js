@@ -1,4 +1,4 @@
-export function get_health(req, res) {
+export const get_health = (req, res) => {
   try {
     const healthCheck = {
       status: "OK",

@@ -1,9 +1,12 @@
-export function add_token(req, res) {
+import { fillTile } from "../models/gomoku_model";
+
+export const add_token = (req, res) => {
   try {
-    const { gameId, row, column } = req.body;
+    const { boardId, row, column } = req.body;
     const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
     //mer logik här sen
+    fillTile(boardId, row, column, 1);
 
     res.status(200).json({
       status: "OK",
