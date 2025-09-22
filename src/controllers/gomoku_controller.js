@@ -28,11 +28,10 @@ export const create_game = (req, res) => {
 
         res.status(200).json({
             status: "OK",
-            message: `Created new game with ID ${game.gameId}`,
-            user,
+            message: `Created new game with ID ${game.gameId}`
         });
     } catch (error) {
-        console.error("Could not add_token in Gomoku:", error);
+        console.error("Could not create_game in Gomoku:", error);
         res.status(503).json({
             status: "ERROR",
             message: "Service unavailable",
@@ -53,7 +52,7 @@ export const add_player = (req, res) => {
             user,
         });
     } catch (error) {
-        console.error("Could not add_token in Gomoku:", error);
+        console.error("Could not add_player in Gomoku:", error);
         res.status(503).json({
             status: "ERROR",
             message: "Service unavailable",
