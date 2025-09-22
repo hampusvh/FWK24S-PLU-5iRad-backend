@@ -31,6 +31,8 @@ export const gomoku_fill_tile = (gameId, row, column, token) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.tiles[row][column] = token;
+
+    return board.tiles;
 }
 
 export const gomoku_add_player = (gameId, playerId) => {

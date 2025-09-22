@@ -1,17 +1,18 @@
 import { gomoku_add_player, gomoku_create_game, gomoku_fill_tile } from "../models/gomoku_model.js";
 
+// todo: require Authorization header 
 export const add_token = (req, res) => {
     try {
-        const { boardId, row, column } = req.body;
+        const { gameId, row, column } = req.body;
         const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
         //mer logik här sen
-        gomoku_fill_tile(boardId, row, column, 1);
+        const tiles = gomoku_fill_tile(gameId, row, column, 1);
 
         res.status(200).json({
             status: "OK",
             message: `Token placed at row ${row}, column ${column} for game ${gameId}`,
-            user,
+            tiles: tiles
         });
     } catch (error) {
         console.error("Could not add_token in Gomoku:", error);
