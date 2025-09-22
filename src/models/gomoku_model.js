@@ -14,11 +14,15 @@ const tilesTemplate = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-export const createBoard = () => {
-    const boardObj = {
+export const createGame = () => {
+    const gameObj = {
         gameId: uuidv4(),
         tiles: tilesTemplate
     }
+
+    boards.push(gameObj);
+
+    return gameObj;
 }
 
 export const fillTile = (boardId, row, column, token) => {
