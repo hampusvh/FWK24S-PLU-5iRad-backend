@@ -1,4 +1,4 @@
-import { addPlayer, createGame, fillTile } from "../models/gomoku_model.js";
+import { gomoku_add_player, gomoku_create_game, gomoku_fill_tile } from "../models/gomoku_model.js";
 
 export const add_token = (req, res) => {
     try {
@@ -6,7 +6,7 @@ export const add_token = (req, res) => {
         const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
         //mer logik här sen
-        fillTile(boardId, row, column, 1);
+        gomoku_fill_tile(boardId, row, column, 1);
 
         res.status(200).json({
             status: "OK",
@@ -24,7 +24,7 @@ export const add_token = (req, res) => {
 
 export const create_game = (req, res) => {
     try {
-        const game = createGame();
+        const game = gomoku_create_game();
 
         res.status(200).json({
             status: "OK",
@@ -45,7 +45,7 @@ export const add_player = (req, res) => {
         const { gameId } = req.body;
         const { user } = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
-        addPlayer(gameId, user.id);
+        gomoku_add_player(gameId, user.id);
 
         res.status(200).json({
             status: "OK",

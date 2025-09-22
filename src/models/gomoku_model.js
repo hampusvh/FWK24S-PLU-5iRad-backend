@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+
 export const boards = [];
 
 const tilesTemplate = [
@@ -14,7 +15,7 @@ const tilesTemplate = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-export const createGame = () => {
+export const gomoku_create_game = () => {
     const gameObj = {
         gameId: uuidv4(),
         tiles: tilesTemplate,
@@ -26,19 +27,19 @@ export const createGame = () => {
     return gameObj;
 }
 
-export const fillTile = (gameId, row, column, token) => {
+export const gomoku_fill_tile = (gameId, row, column, token) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.tiles[row][column] = token;
 }
 
-export const addPlayer = (gameId, playerId) => {
+export const gomoku_add_player = (gameId, playerId) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.players.push(playerId);
 }
 
-export const checkWinner = (gameId, startRow, startColumn) => {
+export const gomoku_check_winner = (gameId, startRow, startColumn) => {
     const board = boards.find(b => b.gameId === gameId);
 
     let tileToken = board.tiles[startRow][startColumn]; // contains the current marker for the player who has occupied that tile
