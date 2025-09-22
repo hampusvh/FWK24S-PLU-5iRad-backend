@@ -42,6 +42,9 @@ export const checkWinner = (gameId, startRow, startColumn) => {
     const board = boards.find(b => b.gameId === gameId);
 
     let tileToken = board.tiles[startRow][startColumn]; // contains the current marker for the player who has occupied that tile
+
+    if(!tileToken || tileToken && tileToken <= 0) return; // cannot be null or 0 since thats empty
+
     let rowScore = 1;
     let columnScore = 1;
     let diagonalScore = 1;
