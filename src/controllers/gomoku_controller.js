@@ -49,7 +49,7 @@ export const add_player = (req, res) => {
 
         res.status(200).json({
             status: "OK",
-            message: `Created new game with ID ${game.gameId}`,
+            message: `Added player ${user.id} to game ${game.gameId}`,
             user,
         });
     } catch (error) {
