@@ -17,7 +17,8 @@ const tilesTemplate = [
 export const createGame = () => {
     const gameObj = {
         gameId: uuidv4(),
-        tiles: tilesTemplate
+        tiles: tilesTemplate,
+        players: []
     }
 
     boards.push(gameObj);
@@ -25,8 +26,14 @@ export const createGame = () => {
     return gameObj;
 }
 
-export const fillTile = (boardId, row, column, token) => {
-    const board = boards.find(b => b.gameId === boardId);
+export const fillTile = (gameId, row, column, token) => {
+    const board = boards.find(b => b.gameId === gameId);
 
-    board[row][column] = token;
+    board.tiles[row][column] = token;
+}
+
+export const addPlayer = (gameId, playerId) => {
+    const board = boards.find(b => b.gameId === gameId);
+
+    board.players.push(playerId);
 }
