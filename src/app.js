@@ -1,6 +1,6 @@
 import express from "express";
 import healthRoutes from "./routes/health_routes.js";
-import gomokuRoutes from "./routes/gomoku.js";
+import gomokuRoutes from "./routes/gomoku_routes.js";
 
 const app = express();
 
