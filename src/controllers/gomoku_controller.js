@@ -7,12 +7,12 @@ export const add_token = (req, res) => {
         const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
         //mer logik här sen
-        const tiles = gomoku_fill_tile(gameId, row, column, token);
+        const data = gomoku_fill_tile(gameId, row, column, token);
 
         res.status(200).json({
             status: "OK",
             message: `Token placed at row ${row}, column ${column} for game ${gameId}`,
-            tiles: tiles
+            data: data
         });
     } catch (error) {
         console.error("Could not add_token in Gomoku:", error);
@@ -29,7 +29,8 @@ export const create_game = (req, res) => {
 
         res.status(200).json({
             status: "OK",
-            message: `Created new game with ID ${game.gameId}`
+            message: `Created new game with ID ${game.gameId}`,
+            gameId: game.gameId
         });
     } catch (error) {
         console.error("Could not create_game in Gomoku:", error);

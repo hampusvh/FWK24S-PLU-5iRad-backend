@@ -2,23 +2,21 @@ import { v4 as uuidv4 } from "uuid";
 
 export const boards = [];
 
-const tilesTemplate = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-];
-
 export const gomoku_create_game = () => {
     const gameObj = {
         gameId: uuidv4(),
-        tiles: tilesTemplate,
+        tiles: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
         players: []
     }
 
@@ -32,7 +30,12 @@ export const gomoku_fill_tile = (gameId, row, column, token) => {
 
     board.tiles[row][column] = token;
 
-    return board.tiles;
+    const checkWinner = gomoku_check_winner(gameId, row, column);
+
+    return {
+        tiles: board.tiles,
+        winner: checkWinner ? token : null
+    };
 }
 
 export const gomoku_add_player = (gameId, playerId) => {
@@ -73,6 +76,8 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
         }
 
         // check diagonally
+        // bug: putting token from top right to bottom left or bottom left to top right, doesn't seem to trigger either of these conditions
+        // it only works if you go from bottom right to top left or top left from bottom right. Why?
         if((board.tiles[startRow-i] && board.tiles[startRow-i][startColumn-i]) && board.tiles[startRow-i][startColumn-i] == tileToken) {
             diagonalScore++;
         }
@@ -84,20 +89,20 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
 
     if(rowScore >= 5) {
         console.log(`Player with the token ${tileToken} has won (horizontally)!`);
-        return;
+        return true;
     }
 
     if(columnScore >= 5) {
         console.log(`Player with the token ${tileToken} has won (vertically)!`);
-        return;
+        return true;
     }
 
     if(diagonalScore >= 5) {
         console.log(`Player with the token ${tileToken} has won (diagonally)!`);
-        return;
+        return true;
     }
 
-    console.log("No winner yet!");
+    return false;
 }
 
 const gomoku_get_tiles = () => {
