@@ -98,7 +98,8 @@ export const get_game = (req, res) => {
         }
 
         res.status(200).json({
-            status: "OK"
+            status: "OK",
+            data: game
         });
     } catch (error) {
         console.error("Could not get_tiles in Gomoku:", error);
