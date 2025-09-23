@@ -1,12 +1,17 @@
+import jwt from "jsonwebtoken";
+
+const users = [
+    { id: 1, username: "test", password: "test" },
+    { id: 2, username: "test2", password: "test2" }
+];
+
 export function register(req, res) {
 
     try {
         const { username, password } = req.body || {};
-
         if (!username || !password) {
             return res.status(400).json({ message: "Username & password required" });
         }
-
         return res.status(201).json({
             message: "Registration successful!",
         });
@@ -19,23 +24,24 @@ export function login(req, res) {
 
     try {
         const { username, password } = req.body || {};
-
         if (!username || !password) {
-            return res.status(400).json({
-                message: "Username & password required",
-            });
+            return res.status(400).json({ message: "Username & password required" });
         }
 
-        const isAuthorized = username === "test" && password === "test";
-
-        if (!isAuthorized) {
-            return res.status(401).json({
-                message: "Invalid credentials",
-            });
+        const find = users.find(user => user.username === username && user.password === password);
+        if (!find) {
+            return res.status(401).json({ message: "Invalid credentials!" });
         }
+
+        const token = jwt.sign(
+            { id: find.id, username: find.username },
+            process.env.JWT_SECRET,
+            { expiresIn: "2h" }
+        );
 
         return res.status(200).json({
             message: "Login successful!",
+            jwt: token,
         });
 
     } catch (error) {
