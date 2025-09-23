@@ -1,4 +1,4 @@
-import { gomoku_add_player, gomoku_create_game, gomoku_fill_tile, gomoku_get_tiles } from "../models/gomoku_model.js";
+import { gomoku_add_player, gomoku_create_game, gomoku_fill_tile, gomoku_get_game, gomoku_get_tiles } from "../models/gomoku_model.js";
 
 // todo: require Authorization header 
 export const add_token = (req, res) => {
@@ -69,6 +69,36 @@ export const get_tiles = (req, res) => {
         res.status(200).json({
             status: "OK",
             tiles: tiles
+        });
+    } catch (error) {
+        console.error("Could not get_tiles in Gomoku:", error);
+        res.status(503).json({
+            status: "ERROR",
+            message: "Service unavailable",
+        });
+    }
+}
+
+export const get_game = (req, res) => {
+    try {
+        const { gameId } = req.query;
+
+        if(!gameId) {
+            return res.status(400).json({
+                message: "gameId query parameter is missing."
+            });
+        }
+
+        const game = gomoku_get_game(gameId);
+
+        if((!game || (game && game.length < 1)) || (game && (gameId != game.gameId))) {
+            return res.status(404).json({
+                message: "Game session not found."
+            });
+        }
+
+        res.status(200).json({
+            status: "OK"
         });
     } catch (error) {
         console.error("Could not get_tiles in Gomoku:", error);

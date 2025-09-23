@@ -110,3 +110,9 @@ export const gomoku_get_tiles = () => {
 
     return board.tiles;
 }
+
+export const gomoku_get_game = (gameId) => {
+    const board = boards.find(b => b.gameId === gameId);
+
+    return board;
+}
