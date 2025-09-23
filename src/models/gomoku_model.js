@@ -55,7 +55,6 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
     let columnScore = 1;
     let diagonalScore = 1;
 
-    // possible bug: does it increment even after it finds the opponents token? if that's the case, maybe break out of the loop when we find the opponents token, or something...?
     for(let i = 1; i < 5; i++) {
         // check horizontally
         if(board.tiles[startRow][startColumn+i] && board.tiles[startRow][startColumn+i] == tileToken) {
@@ -76,13 +75,19 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
         }
 
         // check diagonally
-        // bug: putting token from top right to bottom left or bottom left to top right, doesn't seem to trigger either of these conditions
-        // it only works if you go from bottom right to top left or top left from bottom right. Why?
         if((board.tiles[startRow-i] && board.tiles[startRow-i][startColumn-i]) && board.tiles[startRow-i][startColumn-i] == tileToken) {
             diagonalScore++;
         }
 
+        if((board.tiles[startRow-i] && board.tiles[startRow-i][startColumn+i]) && board.tiles[startRow-i][startColumn+i] == tileToken) {
+            diagonalScore++;
+        }
+
         if((board.tiles[startRow+i] && board.tiles[startRow+i][startColumn+i]) && board.tiles[startRow+i][startColumn+i] == tileToken) {
+            diagonalScore++;
+        }
+
+        if((board.tiles[startRow+i] && board.tiles[startRow+i][startColumn-i]) && board.tiles[startRow+i][startColumn-i] == tileToken) {
             diagonalScore++;
         }
     }
