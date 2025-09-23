@@ -64,7 +64,21 @@ export const add_player = (req, res) => {
 
 export const get_tiles = (req, res) => {
     try {
-        const tiles = gomoku_get_tiles();
+        const { gameId } = req.query;
+
+        if(!gameId) {
+            return res.status(400).json({
+                message: "gameId query parameter is missing."
+            });
+        }
+
+        const tiles = gomoku_get_tiles(gameId);
+
+        if((!tiles || (tiles && tiles.length < 1))) {
+            return res.status(404).json({
+                message: "Tiles not found. This should not happen."
+            });
+        }
 
         res.status(200).json({
             status: "OK",

@@ -105,10 +105,10 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
     return false;
 }
 
-export const gomoku_get_tiles = () => {
+export const gomoku_get_tiles = (gameId) => {
     const board = boards.find(b => b.gameId === gameId);
 
-    return board.tiles;
+    return board ? board.tiles : [];
 }
 
 export const gomoku_get_game = (gameId) => {
