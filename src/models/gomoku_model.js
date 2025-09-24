@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const boards = [];
 
-export const gomoku_create_game = () => {
+export const gomokuCreateGame = () => {
     const gameObj = {
         gameId: uuidv4(),
         tiles: [
@@ -25,12 +25,12 @@ export const gomoku_create_game = () => {
     return gameObj;
 }
 
-export const gomoku_fill_tile = (gameId, row, column, token) => {
+export const gomokuFillTile = (gameId, row, column, token) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.tiles[row][column] = token;
 
-    const checkWinner = gomoku_check_winner(gameId, row, column);
+    const checkWinner = gomokuCheckWinner(gameId, row, column);
 
     return {
         tiles: board.tiles,
@@ -38,13 +38,13 @@ export const gomoku_fill_tile = (gameId, row, column, token) => {
     };
 }
 
-export const gomoku_add_player = (gameId, playerId) => {
+export const gomokuAddPlayer = (gameId, playerId) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.players.push(playerId);
 }
 
-export const gomoku_check_winner = (gameId, startRow, startColumn) => {
+export const gomokuCheckWinner = (gameId, startRow, startColumn) => {
     const board = boards.find(b => b.gameId === gameId);
 
     let tileToken = board.tiles[startRow][startColumn]; // contains the current marker for the player who has occupied that tile
@@ -110,13 +110,13 @@ export const gomoku_check_winner = (gameId, startRow, startColumn) => {
     return false;
 }
 
-export const gomoku_get_tiles = (gameId) => {
+export const gomokuGetTiles = (gameId) => {
     const board = boards.find(b => b.gameId === gameId);
 
     return board ? board.tiles : [];
 }
 
-export const gomoku_get_game = (gameId) => {
+export const gomokuGetGame = (gameId) => {
     const board = boards.find(b => b.gameId === gameId);
 
     return board;

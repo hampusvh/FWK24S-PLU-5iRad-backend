@@ -1,13 +1,13 @@
-import { gomoku_add_player, gomoku_create_game, gomoku_fill_tile, gomoku_get_game, gomoku_get_tiles } from "../models/gomoku_model.js";
+import { gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../models/gomoku_model.js";
 
 // todo: require Authorization header 
-export const add_token = (req, res) => {
+export const addToken = (req, res) => {
     try {
         const { gameId, row, column, token } = req.body;
         const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
         //mer logik här sen
-        const data = gomoku_fill_tile(gameId, row, column, token);
+        const data = gomokuFillTile(gameId, row, column, token);
 
         res.status(200).json({
             status: "OK",
@@ -23,9 +23,9 @@ export const add_token = (req, res) => {
     }
 }
 
-export const create_game = (req, res) => {
+export const createGame = (req, res) => {
     try {
-        const game = gomoku_create_game();
+        const game = gomokuCreateGame();
 
         res.status(200).json({
             status: "OK",
@@ -41,12 +41,12 @@ export const create_game = (req, res) => {
     }
 }
 
-export const add_player = (req, res) => {
+export const addPlayer = (req, res) => {
     try {
         const { gameId } = req.body;
         const { user } = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
-        gomoku_add_player(gameId, user.id);
+        gomokuAddPlayer(gameId, user.id);
 
         res.status(200).json({
             status: "OK",
@@ -62,7 +62,7 @@ export const add_player = (req, res) => {
     }
 }
 
-export const get_tiles = (req, res) => {
+export const getTiles = (req, res) => {
     try {
         const { gameId } = req.query;
 
@@ -72,7 +72,7 @@ export const get_tiles = (req, res) => {
             });
         }
 
-        const tiles = gomoku_get_tiles(gameId);
+        const tiles = gomokuGetTiles(gameId);
 
         if((!tiles || (tiles && tiles.length < 1))) {
             return res.status(404).json({
@@ -93,7 +93,7 @@ export const get_tiles = (req, res) => {
     }
 }
 
-export const get_game = (req, res) => {
+export const getGame = (req, res) => {
     try {
         const { gameId } = req.query;
 
@@ -103,7 +103,7 @@ export const get_game = (req, res) => {
             });
         }
 
-        const game = gomoku_get_game(gameId);
+        const game = gomokuGetGame(gameId);
 
         if((!game || (game && game.length < 1)) || (game && (gameId != game.gameId))) {
             return res.status(404).json({
