@@ -1,10 +1,8 @@
 import { gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../domains/gomoku.js";
 
-// todo: require Authorization header 
 export const addToken = (req, res) => {
     try {
         const { gameId, row, column, token } = req.body;
-        const user = req.user; // kommer innehålla användarobjektet för inloggade användaren
 
         //mer logik här sen
         const data = gomokuFillTile(gameId, row, column, token);
@@ -44,14 +42,13 @@ export const createGame = (req, res) => {
 export const addPlayer = (req, res) => {
     try {
         const { gameId } = req.body;
-        const { user } = req.user; // kommer innehålla användarobjektet för inloggade användaren
+        const { id } = req.user;
 
-        gomokuAddPlayer(gameId, user.id);
+        gomokuAddPlayer(gameId, id);
 
         res.status(200).json({
             status: "OK",
-            message: `Added player ${user.id} to game ${game.gameId}`,
-            user,
+            message: `Added player ${id} to game ${gameId}`
         });
     } catch (error) {
         console.error("Could not add_player in Gomoku:", error);

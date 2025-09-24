@@ -40,8 +40,11 @@ export const gomokuFillTile = (gameId, row, column, token) => {
 
 export const gomokuAddPlayer = (gameId, playerId) => {
     const board = boards.find(b => b.gameId === gameId);
+    const player = board.players.find(pId => pId === playerId);
 
-    board.players.push(playerId);
+    if(!player) {
+        board.players.push(playerId);
+    }
 }
 
 export const gomokuCheckWinner = (gameId, startRow, startColumn) => {
