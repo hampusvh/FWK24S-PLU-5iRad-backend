@@ -3,6 +3,7 @@ import cors from "cors";
 import healthRoutes from "./routes/health_routes.js";
 import gomokuRoutes from "./routes/gomoku_routes.js";
 import authRoutes from "./routes/auth_routes.js";
+import { auth } from "./middleware/auth_middleware.js";
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/api/health", healthRoutes);
-app.use("/api/gomoku", gomokuRoutes);
+app.use("/api/gomoku", auth, gomokuRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use((req, res) => {
