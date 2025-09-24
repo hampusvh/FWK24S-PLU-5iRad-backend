@@ -12,10 +12,20 @@ export function register(req, res) {
         if (!username || !password) {
             return res.status(400).json({ message: "Username & password required" });
         }
+
+        const exists = users.find(user => user.username === username);
+        if (exists) {
+            return res.status(409).json({ message: "Username already exists!" });
+        }
+
+        const newUser = { id: users.length + 1, username, password };
+        users.push(newUser);
+
         return res.status(201).json({
             message: "Registration successful!",
         });
     } catch (error) {
+
         return res.status(500).json({ message: "Server error" });
     }
 }
