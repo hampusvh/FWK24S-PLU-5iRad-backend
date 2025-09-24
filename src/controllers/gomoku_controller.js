@@ -1,4 +1,4 @@
-import { gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../models/gomoku_model.js";
+import { gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../domains/gomoku.js";
 
 // todo: require Authorization header 
 export const addToken = (req, res) => {
