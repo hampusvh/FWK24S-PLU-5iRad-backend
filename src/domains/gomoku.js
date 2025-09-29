@@ -17,7 +17,8 @@ export const gomokuCreateGame = () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ],
-        players: []
+        players: [],
+        round: 0
     }
 
     boards.push(gameObj);
@@ -29,11 +30,13 @@ export const gomokuFillTile = (gameId, row, column, token) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.tiles[row][column] = token;
+    board.round+= 1;
 
     const checkWinner = gomokuCheckWinner(gameId, row, column);
 
     return {
         tiles: board.tiles,
+        round: board.round,
         winner: checkWinner ? token : null
     };
 }
