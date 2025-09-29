@@ -1,4 +1,4 @@
-import { gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../domains/gomoku.js";
+import { boards, gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../domains/gomoku.js";
 
 export const addToken = (req, res) => {
     try {
@@ -44,11 +44,26 @@ export const addPlayer = (req, res) => {
         const { gameId } = req.body;
         const { id } = req.user;
 
+        if(!gameId) {
+            return res.status(400).json({
+                message: "gameId query parameter is missing."
+            });
+        }
+
+        const board = boards.find(b => b.gameId === gameId);
+        if(!board) {
+            return res.status(400).json({
+                message: `Game with ID ${gameId} does not exist.`
+            });
+        }
+
         gomokuAddPlayer(gameId, id);
 
         res.status(200).json({
             status: "OK",
-            message: `Added player ${id} to game ${gameId}`
+            message: `Added player ${id} to game ${gameId}`,
+            gameId: gameId,
+            playerId: id
         });
     } catch (error) {
         console.error("Could not add_player in Gomoku:", error);
