@@ -18,7 +18,8 @@ export const gomokuCreateGame = () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ],
         players: [],
-        round: 0
+        round: 0,
+        isYourTurn: true,
     }
 
     boards.push(gameObj);
@@ -30,13 +31,15 @@ export const gomokuFillTile = (gameId, row, column, token) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.tiles[row][column] = token;
-    board.round+= 1;
+    board.round += 1;
+    board.isYourTurn = board.round % 2 === 0 ? true : false; //todo: make functionable, this is only for testing
 
     const checkWinner = gomokuCheckWinner(gameId, row, column);
 
     return {
         tiles: board.tiles,
         round: board.round,
+        isYourTurn: board.isYourTurn,
         winner: checkWinner ? token : null
     };
 }
