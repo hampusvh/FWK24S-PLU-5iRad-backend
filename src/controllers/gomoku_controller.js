@@ -1,11 +1,21 @@
 import { boards, gomokuAddPlayer, gomokuCreateGame, gomokuFillTile, gomokuGetGame, gomokuGetTiles } from "../domains/gomoku.js";
+import { boardHandler } from "../handlers/board_handler.js";
+import io from "../server.js";
 
 export const addToken = (req, res) => {
     try {
         const { gameId, row, column, token } = req.body;
+        const { id } = req.user;
 
-        //mer logik här sen
         const data = gomokuFillTile(gameId, row, column, token);
+
+        io.emit("board:dropComplete", {
+            gameId: gameId,
+            playerId: id,
+            row: row,
+            column: column,
+            token: token
+        });
 
         res.status(200).json({
             status: "OK",
