@@ -118,6 +118,7 @@ export const getTiles = (req, res) => {
 export const getGame = (req, res) => {
     try {
         const { gameId } = req.query;
+        const { id } = req.user;
 
         if(!gameId) {
             return res.status(400).json({
@@ -125,7 +126,7 @@ export const getGame = (req, res) => {
             });
         }
 
-        const game = gomokuGetGame(gameId);
+        const game = gomokuGetGame(gameId, id);
 
         if((!game || (game && game.length < 1)) || (game && (gameId != game.gameId))) {
             return res.status(404).json({
