@@ -26,18 +26,24 @@ export const gomokuCreateGame = () => {
     return gameObj;
 }
 
-export const gomokuFillTile = (gameId, row, column, token) => {
+export const gomokuFillTile = (gameId, row, column, token, userId) => {
     const board = boards.find(b => b.gameId === gameId);
 
     board.tiles[row][column] = token;
-    
     board.round += 1;
 
     const checkWinner = gomokuCheckWinner(gameId, row, column);
 
+    let isWinner = null;
+
+    if (checkWinner) { 
+        const winner = userId;
+        board.winner = winner;
+    }
+
     return {
         tiles: board.tiles,
-        winner: checkWinner ? token : null
+        winner: checkWinner ? token : null,
     };
 }
 
@@ -100,17 +106,17 @@ export const gomokuCheckWinner = (gameId, startRow, startColumn) => {
 
     if(rowScore >= 5) {
         console.log(`Player with the token ${tileToken} has won (horizontally)!`);
-        return true;
+        return tileToken;
     }
 
     if(columnScore >= 5) {
         console.log(`Player with the token ${tileToken} has won (vertically)!`);
-        return true;
+        return tileToken;
     }
 
     if(diagonalScore >= 5) {
         console.log(`Player with the token ${tileToken} has won (diagonally)!`);
-        return true;
+        return tileToken;
     }
 
     return false;
@@ -126,6 +132,7 @@ export const gomokuGetGame = (gameId, playerId) => {
     const board = boards.find(b => b.gameId === gameId);
     const playersTurn = board.round % 2 === 0 ? board.players[0] : board.players[1];
     board.isYourTurn = playerId === playersTurn ? true : false;
+    board.isWinner = board.winner === playerId;
 
     return board;
 }

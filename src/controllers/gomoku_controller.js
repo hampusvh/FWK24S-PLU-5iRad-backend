@@ -7,7 +7,7 @@ export const addToken = (req, res) => {
         const { gameId, row, column, token } = req.body;
         const { id } = req.user;
 
-        const data = gomokuFillTile(gameId, row, column, token);
+        const data = gomokuFillTile(gameId, row, column, token, id);
 
         io.emit("board:dropComplete", {
             gameId: gameId,
