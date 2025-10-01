@@ -49,10 +49,13 @@ export function login(req, res) {
             { expiresIn: "2h" }
         );
 
-        return res.status(200).json({
-            message: "Login successful!",
-            jwt: token,
-        });
+        return res
+            .status(200)
+            .set("Authorization", `Bearer {token}`)
+            .json({
+                message: "Login successful!",
+                jwt: token,
+            });
 
     } catch (error) {
         return res.status(500).json({ message: "Server error" });
