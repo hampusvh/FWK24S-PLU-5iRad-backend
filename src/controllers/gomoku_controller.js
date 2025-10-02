@@ -14,7 +14,9 @@ export const addToken = (req, res) => {
             playerId: id,
             row: row,
             column: column,
-            token: token
+            token: token,
+            tiles: data.tiles,
+            winner: data.winner,
         });
 
         res.status(200).json({
